@@ -16,6 +16,11 @@
     
 }
 
+.add-cart-btn{
+    border: 2px solid #C83C0E;
+    border-radius: 1.5em;
+}
+
 #cart{
     display: flex;
     flex-direction: column;

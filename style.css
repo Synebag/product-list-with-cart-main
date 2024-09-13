@@ -1,0 +1,22 @@
+#main-container{
+    display: flex;
+}
+
+#product-list-container{
+    
+}
+
+#product-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-row: auto;
+}
+
+.product{
+    
+}
+
+#cart{
+    display: flex;
+    flex-direction: column;
+}

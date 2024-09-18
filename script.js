@@ -1,10 +1,5 @@
-
-window.addEventListener("load", (event)=> {
-    loadProducts();   
-});
-
 function loadProducts(){
-    fetch(data.json)
+    fetch('data.json')
         .then(response => response.json())
         .then(data => {
             const productList = document.getElementById('product-list');
@@ -24,12 +19,17 @@ function loadProducts(){
                 addCartButton.classList.add('add-cart-btn');
 
                 //Add content to created elements
-                productImage.src = product.image[3];
+                productImage.src = product.image.desktop;
                 productCategory.textContent = product.category;
                 productTitle.textContent = product.name;
                 productPrice.textContent = product.price;
 
+                //Append elements to productDiv
+                productDiv.append(productImage, productCategory, productTitle, productPrice, productPrice);
+                productList.appendChild(productDiv);
             });
 
         })
-}a
+}
+
+loadProducts();

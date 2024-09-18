@@ -11,7 +11,7 @@ function loadProducts(){
 
             data.forEach(product => {
                 // Create elements for from json file
-                const product = document.createElement('div');
+                const productDiv = document.createElement('div');
                 const productImage = document.createElement('img');
                 const productCategory = document.createElement('p');
                 const productTitle = document.createElement('h2');
@@ -19,10 +19,15 @@ function loadProducts(){
                 const addCartButton = document.createElement('div');
 
                 // Add classes to elements
-                product.classList.add('product');
+                productDiv.classList.add('product');
                 productImage.classList.add('product-img');
                 addCartButton.classList.add('add-cart-btn');
 
+                //Add content to created elements
+                productImage.src = product.image[3];
+                productCategory.textContent = product.category;
+                productTitle.textContent = product.name;
+                productPrice.textContent = product.price;
 
             });
 

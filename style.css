@@ -46,17 +46,30 @@ body{
 }
 
 .add-cart-btn{
+    background-color: var(--rose50);
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
     border: 1px solid var(--red);
     border-radius: 1.5em;
     text-align: center;
+    font-weight: 500;
     width: fit-content;
     padding: 0.5em 1em;
     cursor: pointer;
 }
 
-.add-cart-btn :hover{
+.add-cart-btn p{
+    margin: 0;
+}
+
+.add-cart-btn:hover{
     background-color: var(--red);
     color: var(--rose50);
+}
+
+.add-cart-btn:hover svg g{
+    fill: var(--rose50);
 }
 
 #cart{

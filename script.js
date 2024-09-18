@@ -13,10 +13,15 @@ function loadProducts(){
                 // Create elements for from json file
                 const product = document.createElement('div');
                 const productImage = document.createElement('img');
-                const productCatergory = document.createElement('p');
+                const productCategory = document.createElement('p');
                 const productTitle = document.createElement('h2');
                 const productPrice = document.createElement('h3');
                 const addCartButton = document.createElement('div');
+
+                // Add classes to elements
+                product.classList.add('product');
+                productImage.classList.add('product-img');
+                addCartButton.classList.add('add-cart-btn');
 
 
             });

@@ -31,7 +31,7 @@ function loadProducts(){
                 addCartButton.addEventListener('click', function(){
                     addToCart(addCartButton);
                 });
-
+                
                 //Append elements to productDiv
                 productDiv.append(productImage, productCategory, productTitle, productPrice, addCartButton);
                 productList.appendChild(productDiv);
@@ -40,9 +40,11 @@ function loadProducts(){
         })
 }
 
+const cartDiv = document.getElementById('cart');
+
 function addToCart(btn){
-    btn.innerHTML = '<a>+</a> <p>1</p> <a>-</a>';
+    btn.innerHTML = '<a class="quantity-btn">+</a> <p>1</p> <a class="quantity-btn">-</a>';
     btn.style.backgroundColor = 'var(--red)';
     btn.style.color = 'var(--rose50)';
-
+    
 }

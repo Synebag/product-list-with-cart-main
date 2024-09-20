@@ -1,3 +1,7 @@
+//Declaring array for products and cart to hold data from the json file after they've been fetched
+let productArray = [];
+let cartArray = [];
+
 loadProducts();
 
 function loadProducts(){
@@ -7,12 +11,12 @@ function loadProducts(){
             const productList = document.getElementById('product-list');
             let productNumber = 0;
             let productID = '';
-
+            productArray = data;
 
             data.forEach(product => {
                 //Add +1 to the product so every product has different numbers in their ID
-                productNumber++;
                 productID = 'product-' + productNumber;
+                productNumber++;
 
                 // Create elements for from json file
                 const productDiv = document.createElement('div');
@@ -39,10 +43,15 @@ function loadProducts(){
                 
                 // Add functions to the add to cart button
                 addCartButton.addEventListener('click', function(){
-                    addToCart(addCartButton);
+                    //Change button color and add the quantity buttons
+                    addCartButton.innerHTML = '<a class="quantity-btn">+</a> <p>1</p> <a class="quantity-btn">-</a>';
+                    addCartButton.style.backgroundColor = 'var(--red)';
+                    addCartButton.style.color = 'var(--rose50)';
+
+                    addToCart(productNumber);
                 });
 
-                //Append elements to productDiv
+                //Append elements to productDiv and productList
                 productDiv.append(productImage, productCategory, productTitle, productPrice, addCartButton);
                 productList.appendChild(productDiv);
             });
@@ -50,11 +59,10 @@ function loadProducts(){
         })
 }
 
+
+//Declare the cart
 const cartDiv = document.getElementById('cart');
 
-function addToCart(btn){
-    btn.innerHTML = '<a class="quantity-btn">+</a> <p>1</p> <a class="quantity-btn">-</a>';
-    btn.style.backgroundColor = 'var(--red)';
-    btn.style.color = 'var(--rose50)';
+function addToCart(i){
     
 }

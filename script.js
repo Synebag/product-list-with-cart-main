@@ -5,8 +5,15 @@ function loadProducts(){
         .then(response => response.json())
         .then(data => {
             const productList = document.getElementById('product-list');
+            let productNumber = 0;
+            let productID = '';
+
 
             data.forEach(product => {
+                //Add +1 to the product so every product has different numbers in their ID
+                productNumber++;
+                productID = 'product-' + productNumber;
+
                 // Create elements for from json file
                 const productDiv = document.createElement('div');
                 const productImage = document.createElement('img');
@@ -20,6 +27,9 @@ function loadProducts(){
                 productImage.classList.add('product-img');
                 addCartButton.classList.add('add-cart-btn');
 
+                // Add an ID to every product so it can be refered and added to the cart
+                addCartButton.id = productID;
+
                 //Add content to created elements
                 productImage.src = product.image.desktop;
                 productCategory.textContent = product.category;
@@ -31,7 +41,7 @@ function loadProducts(){
                 addCartButton.addEventListener('click', function(){
                     addToCart(addCartButton);
                 });
-                
+
                 //Append elements to productDiv
                 productDiv.append(productImage, productCategory, productTitle, productPrice, addCartButton);
                 productList.appendChild(productDiv);

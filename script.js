@@ -9,7 +9,6 @@ function loadProducts(){
         .then(response => response.json())
         .then(data => {
             const productList = document.getElementById('product-list');
-            let productNumber = 0;
             let productID = '';
             productArray = data;
 
@@ -28,7 +27,7 @@ function loadProducts(){
                 addCartButton.classList.add('add-cart-btn');
 
                 // Add an ID to every product so it can be refered and added to the cart
-                productID = 'product-' + productNumber;
+                productID = 'product-' + index;
                 addCartButton.id = productID;
 
                 //Add content to created elements
@@ -45,11 +44,11 @@ function loadProducts(){
                     addCartButton.style.backgroundColor = 'var(--red)';
                     addCartButton.style.color = 'var(--rose50)';
 
-                    cartArray.push(productArray[index]);
+                    //Push the the product object and add an id to each product
+                    cartArray.push({...productArray[index], id: 'product' + index});
+                    console.log(cartArray);
+                    console.log(cartArray.length);
                 });
-
-                //Add +1 to the product so every product has different numbers in their ID
-                productNumber++;
 
                 //Append elements to productDiv and productList
                 productDiv.append(productImage, productCategory, productTitle, productPrice, addCartButton);
@@ -61,3 +60,10 @@ function loadProducts(){
 
 //Declare the cart
 const cartDiv = document.getElementById('cart');
+const selectedOrder = document.getElementById('selected-order');
+const cartPlaceholder = document.getElementById('cart-placeholder');
+const cartQuantity = document.getElementById('cart-quantity');
+
+function renderToCart(i){
+    
+}

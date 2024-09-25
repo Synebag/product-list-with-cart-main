@@ -48,6 +48,8 @@ function loadProducts(){
                     cartArray.push({...productArray[index], id: 'product' + index});
                     console.log(cartArray);
                     console.log(cartArray.length);
+                    
+                    renderToCart(cartArray.length - 1);
                 });
 
                 //Append elements to productDiv and productList
@@ -64,6 +66,33 @@ const selectedOrder = document.getElementById('selected-order');
 const cartPlaceholder = document.getElementById('cart-placeholder');
 const cartQuantity = document.getElementById('cart-quantity');
 
+//Function to add the products to the cart
 function renderToCart(i){
-    
+    cartQuantity.textContent = cartArray.length;
+    cartPlaceholder.style.display= 'none';
+
+    //Get the product object from the product array
+    let currentId = cartArray[i].id;
+    let currentCartId = 'cart' + currentId;
+    let currentName = cartArray[i].name;
+    let currentPrice = cartArray[i].price;
+    let currentQuantity = cartArray.reduce((accumulator, prod) =>{
+        return prod.id === currentId ? accumulator + 1 : accumulator;
+    }, 0);
+
+    //Checks if the cart has the object with the same id
+    if(selectedOrder.querySelector(`#${currentCartId}`)){//if it does, it updates the existing innerHTML
+        let currentElement = document.getElementById(currentCartId);
+        currentElement.innerHTML=`
+            <h4>${currentName}</h4>
+            <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}`;
+    } else {
+        //If it doesn't, it'll add a new one
+        let cartOrder = document.createElement('div');
+        cartOrder.id = currentCartId;
+        cartOrder.innerHTML=`
+            <h4>${currentName}</h4>
+            <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}` 
+        selectedOrder.append(cartOrder);
+    }
 }

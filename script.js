@@ -1,6 +1,7 @@
 //Declaring array for products and cart to hold data from the json file after they've been fetched
 let productArray = [];
 let cartArray = [];
+let productQuantityArray = [];
 
 loadProducts();
 
@@ -39,16 +40,36 @@ function loadProducts(){
                 
                 // Add functions to the add to cart button
                 addCartButton.addEventListener('click', () => {
+
                     //Change button color and add the quantity buttons
-                    addCartButton.innerHTML = '<a class="quantity-btn">+</a> <p>1</p> <a class="quantity-btn">-</a>';
+                    const addQuantityButton = document.createElement('a');
+                    const subtractQuantityButton = document.createElement('a');
+                    const productQuantity = document.createElement('p');
+
+                    //Add the '+' and '-' button to in the button
+                    addQuantityButton.classList.add('add-quantity', 'quantity-btn');
+                    subtractQuantityButton.classList.add('subtract-quantity', 'quantity-btn');
+                    productQuantity.id = 'product-' + index + '-quantity';
+
+                    //change the text context accordingly
+                    addQuantityButton.textContent = '+';
+                    subtractQuantityButton.textContent = '-';
+                    
+                    console.log(cartArray.length);
+                    if(cartArray.length > 1){
+                        productQuantity.textContent = getCurrentQuantity(cartArray.length-1);
+                    }else{
+                        productQuantity.textContent = '1'
+                    }
+
+                    addCartButton.innerHTML = '';
+                    addCartButton.append(addQuantityButton, productQuantity ,subtractQuantityButton);
                     addCartButton.style.backgroundColor = 'var(--red)';
                     addCartButton.style.color = 'var(--rose50)';
 
+
                     //Push the the product object and add an id to each product
                     cartArray.push({...productArray[index], id: 'product' + index});
-                    console.log(cartArray);
-                    console.log(cartArray.length);
-                    
                     renderToCart(cartArray.length - 1);
                 });
 
@@ -76,9 +97,7 @@ function renderToCart(i){
     let currentCartId = 'cart' + currentId;
     let currentName = cartArray[i].name;
     let currentPrice = cartArray[i].price;
-    let currentQuantity = cartArray.reduce((accumulator, prod) =>{
-        return prod.id === currentId ? accumulator + 1 : accumulator;
-    }, 0);
+    let currentQuantity = getCurrentQuantity(i);
 
     //Checks if the cart has the object with the same id
     if(selectedOrder.querySelector(`#${currentCartId}`)){//if it does, it updates the existing innerHTML
@@ -95,4 +114,23 @@ function renderToCart(i){
             <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}` 
         selectedOrder.append(cartOrder);
     }
+}
+
+
+//Function to get the current quantity
+function getCurrentQuantity(i){
+    let currentId = cartArray[i].id;
+    let currentQuantity = cartArray.reduce((accumulator, prod) =>{
+        return prod.id === currentId ? accumulator + 1 : accumulator;
+    }, 0);
+    
+    return currentQuantity;
+}
+
+function addQuantity(){
+
+}
+
+function subtractQuantity(){
+
 }

@@ -1,7 +1,6 @@
 //Declaring array for products and cart to hold data from the json file after they've been fetched
 let productArray = [];
 let cartArray = [];
-let quantityArray = [];
 
 loadProducts();
 
@@ -65,8 +64,9 @@ function loadProducts(){
                     updateButton(index);
 
                     //Push the the product object and add an id to each product
-                    cartArray.push({...productArray[index], id: 'product' + index});
-                    renderToCart(cartArray.length - 1);
+                    cartArray.push({id: 'product-' + index, quantity: 1});
+
+                    renderToCart(index);
 
                 });
 
@@ -86,14 +86,16 @@ const cartQuantity = document.getElementById('cart-quantity');
 
 //Function to add the products to the cart
 function renderToCart(i){
-    cartQuantity.textContent = cartArray.length;
+    cartQuantity.textContent = cartArray.reduce((total, product) => {
+        return total + product.quantity;
+    }, 0);
     cartPlaceholder.style.display= 'none';
 
     //Get the product object from the product array
-    let currentId = cartArray[i].id;
-    let currentCartId = 'cart' + currentId;
-    let currentName = cartArray[i].name;
-    let currentPrice = cartArray[i].price;
+    let currentId = 'product-' + i;
+    let currentCartId = 'cart-' + currentId;
+    let currentName = productArray[i].name;
+    let currentPrice = productArray[i].price;
     let currentQuantity = getCurrentQuantity(i);
 
     //Checks if the cart has the object with the same id
@@ -115,12 +117,11 @@ function renderToCart(i){
 
 //Function to get the current quantity
 function getCurrentQuantity(i){
-    let currentId = cartArray[i].id;
-    let currentQuantity = cartArray.reduce((accumulator, prod) =>{
-        return prod.id === currentId ? accumulator + 1 : accumulator;
-    }, 0);
+    let currentId = 'product-' + i;
+    console.log(currentId);
+    let currentQuantity = cartArray.find(prod => prod.id === currentId);
     
-    return currentQuantity;
+    return currentQuantity.quantity;
 }
 
 //Function add quantity

@@ -57,6 +57,8 @@ function loadProducts(){
                     addCartButton.append(addQuantityButton, productQuantity ,subtractQuantityButton);
                     addCartButton.style.backgroundColor = 'var(--red)';
                     addCartButton.style.color = 'var(--rose50)';
+
+                    addQuantityButton.addEventListener('click',addQuantity(i));
                 }
 
                 // Add functions to the add to cart button
@@ -119,10 +121,14 @@ function renderToCart(i){
     }
 }
 
+//Helper function to get the current ID of a function
+function getCurrentId(i){
+    return 'product-' + i;
+}
+
 //Function to get the current quantity
 function getCurrentQuantity(i){
-    let currentId = 'product-' + i;
-    console.log(currentId);
+    let currentId = getCurrentId(i);
     let currentQuantity = cartArray.find(prod => prod.id === currentId);
     console.log(currentQuantity.quantity);
     return currentQuantity.quantity;
@@ -130,18 +136,14 @@ function getCurrentQuantity(i){
 
 //Function add quantity
 function addQuantity(i){
-    let currentId = cartArray[i].id;//get the current product ID
+    let currentId = getCurrentId(i);//get the current product ID
     let arrayId = quantityArray.findIndex(product => product.id === currentId);//Get index of the array with currentId, and return -1 if there isn't one
-    if (arrayId !== -1){ //If the index is anything other than -1, do the following
         quantityArray[arrayId].quantity += 1;
-    } else {
-        quantityArray.push({id: currentId, quantity: 1});
-    }
 }
 
 //Function to subtract quantity
 function subtractQuantity(i){
-    let currentId = cartArray[i].id;
+    let currentId = getCurrentId(i);
     let arrayId = quantityArray.findIndex(product => product.id === currentId);
     if (arrayId !== -1){
         if(quantityArray[arrayId].quantity !== 0){

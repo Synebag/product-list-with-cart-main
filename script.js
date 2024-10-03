@@ -51,6 +51,7 @@ function loadProducts(){
                     //change the text context accordingly
                     addQuantityButton.textContent = '+';
                     subtractQuantityButton.textContent = '-';
+                    productQuantity.textContent = 1;
 
                     addCartButton.innerHTML = '';
                     addCartButton.append(addQuantityButton, productQuantity ,subtractQuantityButton);
@@ -61,11 +62,14 @@ function loadProducts(){
                 // Add functions to the add to cart button
                 addCartButton.addEventListener('click', () => {
 
-                    updateButton(index);
+                    let currentProdId = 'product-' + index;
 
                     //Push the the product object and add an id to each product
-                    cartArray.push({id: 'product-' + index, quantity: 1});
+                    if (!cartArray.find(prod => prod.id === currentProdId)){
+                        cartArray.push({id: currentProdId, quantity: 1});
+                    };
 
+                    updateButton(index);
                     renderToCart(index);
 
                 });
@@ -96,7 +100,7 @@ function renderToCart(i){
     let currentCartId = 'cart-' + currentId;
     let currentName = productArray[i].name;
     let currentPrice = productArray[i].price;
-    let currentQuantity = getCurrentQuantity(i);
+    let currentQuantity = 1;
 
     //Checks if the cart has the object with the same id
     if(selectedOrder.querySelector(`#${currentCartId}`)){//if it does, it updates the existing innerHTML
@@ -120,7 +124,7 @@ function getCurrentQuantity(i){
     let currentId = 'product-' + i;
     console.log(currentId);
     let currentQuantity = cartArray.find(prod => prod.id === currentId);
-    
+    console.log(currentQuantity.quantity);
     return currentQuantity.quantity;
 }
 

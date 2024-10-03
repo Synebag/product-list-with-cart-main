@@ -137,8 +137,8 @@ function getCurrentQuantity(i){
 //Function add quantity
 function addQuantity(i){
     let currentId = getCurrentId(i);//get the current product ID
-    let arrayId = quantityArray.findIndex(product => product.id === currentId);//Get index of the array with currentId, and return -1 if there isn't one
-        quantityArray[arrayId].quantity += 1;
+    let arrayId = cartArray.findIndex(product => product.id === currentId);//Get index of the array with currentId, and return -1 if there isn't one
+        cartArray[arrayId].quantity += 1;
 }
 
 //Function to subtract quantity

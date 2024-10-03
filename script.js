@@ -27,7 +27,7 @@ function loadProducts(){
                 addCartButton.classList.add('add-cart-btn');
 
                 // Add an ID to every product so it can be refered and added to the cart
-                productID = 'product-' + index;
+                productID = getCurrentId(index);
                 addCartButton.id = productID;
 
                 //Add content to created elements
@@ -36,30 +36,6 @@ function loadProducts(){
                 productTitle.textContent = product.name;
                 productPrice.textContent = product.price;
                 addCartButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="none" viewBox="0 0 21 20"><g fill="#C73B0F" clip-path="url(#a)"><path d="M6.583 18.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM15.334 18.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM3.446 1.752a.625.625 0 0 0-.613-.502h-2.5V2.5h1.988l2.4 11.998a.625.625 0 0 0 .612.502h11.25v-1.25H5.847l-.5-2.5h11.238a.625.625 0 0 0 .61-.49l1.417-6.385h-1.28L16.083 10H5.096l-1.65-8.248Z"/><path d="M11.584 3.75v-2.5h-1.25v2.5h-2.5V5h2.5v2.5h1.25V5h2.5V3.75h-2.5Z"/></g><defs><clipPath id="a"><path fill="#fff" d="M.333 0h20v20h-20z"/></clipPath></defs></svg><p>Add to Cart</p>';
-                
-                function updateButton(i){
-                    //Change button color and add the quantity buttons
-                    const addQuantityButton = document.createElement('a');
-                    const subtractQuantityButton = document.createElement('a');
-                    const productQuantity = document.createElement('p');
-
-                    //Add the '+' and '-' button to in the button
-                    addQuantityButton.classList.add('add-quantity', 'quantity-btn');
-                    subtractQuantityButton.classList.add('subtract-quantity', 'quantity-btn');
-                    productQuantity.id = 'product-' + i + '-quantity';
-
-                    //change the text context accordingly
-                    addQuantityButton.textContent = '+';
-                    subtractQuantityButton.textContent = '-';
-                    productQuantity.textContent = 1;
-
-                    addCartButton.innerHTML = '';
-                    addCartButton.append(addQuantityButton, productQuantity ,subtractQuantityButton);
-                    addCartButton.style.backgroundColor = 'var(--red)';
-                    addCartButton.style.color = 'var(--rose50)';
-
-                    addQuantityButton.addEventListener('click',addQuantity(i));
-                }
 
                 // Add functions to the add to cart button
                 addCartButton.addEventListener('click', () => {
@@ -84,6 +60,41 @@ function loadProducts(){
         })
 }
 
+function updateButton(i){
+
+    const addCartButton = document.getElementById(getCurrentId(i));
+
+    if(getCurrentQuantity(i) !== 0){
+        //Change button color and add the quantity buttons
+        const addQuantityButton = document.createElement('a');
+        const subtractQuantityButton = document.createElement('a');
+        const productQuantity = document.createElement('p');
+
+        //Add the '+' and '-' button to in the button
+        addQuantityButton.classList.add('add-quantity', 'quantity-btn');
+        subtractQuantityButton.classList.add('subtract-quantity', 'quantity-btn');
+        productQuantity.id = 'product-' + i + '-quantity';
+
+        //change the text context accordingly
+        addQuantityButton.textContent = '+';
+        subtractQuantityButton.textContent = '-';
+        productQuantity.textContent = getCurrentQuantity(i);
+
+        addCartButton.innerHTML = '';
+        addCartButton.append(addQuantityButton, productQuantity ,subtractQuantityButton);
+        addCartButton.style.backgroundColor = 'var(--red)';
+        addCartButton.style.color = 'var(--rose50)';
+
+        addQuantityButton.addEventListener('click',() => addQuantity(i));
+        subtractQuantityButton.addEventListener('click',() => subtractQuantity(i));
+    } else {
+        addCartButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="none" viewBox="0 0 21 20"><g fill="#C73B0F" clip-path="url(#a)"><path d="M6.583 18.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM15.334 18.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM3.446 1.752a.625.625 0 0 0-.613-.502h-2.5V2.5h1.988l2.4 11.998a.625.625 0 0 0 .612.502h11.25v-1.25H5.847l-.5-2.5h11.238a.625.625 0 0 0 .61-.49l1.417-6.385h-1.28L16.083 10H5.096l-1.65-8.248Z"/><path d="M11.584 3.75v-2.5h-1.25v2.5h-2.5V5h2.5v2.5h1.25V5h2.5V3.75h-2.5Z"/></g><defs><clipPath id="a"><path fill="#fff" d="M.333 0h20v20h-20z"/></clipPath></defs></svg><p>Add to Cart</p>';
+        addCartButton.style.backgroundColor = 'var(--rose50)';
+        addCartButton.style.color = 'var(--black)';
+    }
+}
+
+
 //Declare the cart
 const cartDiv = document.getElementById('cart');
 const selectedOrder = document.getElementById('selected-order');
@@ -102,14 +113,20 @@ function renderToCart(i){
     let currentCartId = 'cart-' + currentId;
     let currentName = productArray[i].name;
     let currentPrice = productArray[i].price;
-    let currentQuantity = 1;
+    let currentQuantity = getCurrentQuantity(i);
 
     //Checks if the cart has the object with the same id
     if(selectedOrder.querySelector(`#${currentCartId}`)){//if it does, it updates the existing innerHTML
         let currentElement = document.getElementById(currentCartId);
-        currentElement.innerHTML=`
+
+        if(currentQuantity !== 0){
+            currentElement.innerHTML=`
             <h4>${currentName}</h4>
             <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>`;
+        }else{
+            currentElement.remove();
+        }
+        
     } else {
         //If it doesn't, it'll add a new one
         let cartOrder = document.createElement('div');
@@ -130,7 +147,6 @@ function getCurrentId(i){
 function getCurrentQuantity(i){
     let currentId = getCurrentId(i);
     let currentQuantity = cartArray.find(prod => prod.id === currentId);
-    console.log(currentQuantity.quantity);
     return currentQuantity.quantity;
 }
 
@@ -144,12 +160,12 @@ function addQuantity(i){
 //Function to subtract quantity
 function subtractQuantity(i){
     let currentId = getCurrentId(i);
-    let arrayId = quantityArray.findIndex(product => product.id === currentId);
+    let arrayId = cartArray.findIndex(product => product.id === currentId);
     if (arrayId !== -1){
-        if(quantityArray[arrayId].quantity !== 0){
-            quantityArray[arrayId].quantity -= 1;
+        if(cartArray[arrayId].quantity !== 0){
+            cartArray[arrayId].quantity -= 1;
         }else{
-            //function that changes the innerHTML of addCartButton
+            updateButton(i);
         }
     }
 }

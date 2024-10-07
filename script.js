@@ -85,8 +85,14 @@ function updateButton(i){
         addCartButton.style.backgroundColor = 'var(--red)';
         addCartButton.style.color = 'var(--rose50)';
 
-        addQuantityButton.addEventListener('click',() => addQuantity(i));
-        subtractQuantityButton.addEventListener('click',() => subtractQuantity(i));
+        addQuantityButton.addEventListener('click',(event) => {
+            event.stopPropagation();
+            addQuantity(i);
+        });
+        subtractQuantityButton.addEventListener('click',(event) => {
+            event.stopPropagation();
+            subtractQuantity(i);
+        });
     } else {
         addCartButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="none" viewBox="0 0 21 20"><g fill="#C73B0F" clip-path="url(#a)"><path d="M6.583 18.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM15.334 18.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM3.446 1.752a.625.625 0 0 0-.613-.502h-2.5V2.5h1.988l2.4 11.998a.625.625 0 0 0 .612.502h11.25v-1.25H5.847l-.5-2.5h11.238a.625.625 0 0 0 .61-.49l1.417-6.385h-1.28L16.083 10H5.096l-1.65-8.248Z"/><path d="M11.584 3.75v-2.5h-1.25v2.5h-2.5V5h2.5v2.5h1.25V5h2.5V3.75h-2.5Z"/></g><defs><clipPath id="a"><path fill="#fff" d="M.333 0h20v20h-20z"/></clipPath></defs></svg><p>Add to Cart</p>';
         addCartButton.style.backgroundColor = 'var(--rose50)';
@@ -103,10 +109,14 @@ const cartQuantity = document.getElementById('cart-quantity');
 
 //Function to add the products to the cart
 function renderToCart(i){
-    cartQuantity.textContent = cartArray.reduce((total, product) => {
-        return total + product.quantity;
-    }, 0);
-    cartPlaceholder.style.display= 'none';
+    let totalQuantity = cartArray.reduce((total, product) => total + product.quantity, 0);
+    cartQuantity.textContent = totalQuantity;
+    
+    if (cartArray.length > 0){
+        cartPlaceholder.style.display= 'none';
+    }else{
+        cartPlaceholder.style.display= 'block';
+    }
 
     //Get the product object from the product array
     let currentId = 'product-' + i;
@@ -115,27 +125,25 @@ function renderToCart(i){
     let currentPrice = productArray[i].price;
     let currentQuantity = getCurrentQuantity(i);
 
-    //Checks if the cart has the object with the same id
-    if(selectedOrder.querySelector(`#${currentCartId}`)){//if it does, it updates the existing innerHTML
-        let currentElement = document.getElementById(currentCartId);
+    let currentElement = selectedOrder.querySelector(`#${currentCartId}`);
 
-        if(currentQuantity !== 0){
-            currentElement.innerHTML=`
-            <h4>${currentName}</h4>
-            <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>`;
-        }else{
-            currentElement.remove();
+    if(currentQuantity > 0){
+        if (currentElement) {
+            currentElement.innerHTML=`<h4>${currentName}</h4><p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>`;
+        } else {
+             //If it doesn't, it'll add a new one
+            let cartOrder = document.createElement('div');
+            cartOrder.id = currentCartId;
+            cartOrder.innerHTML=`
+                <h4>${currentName}</h4>
+                <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>` 
+            selectedOrder.append(cartOrder);
         }
-        
-    } else {
-        //If it doesn't, it'll add a new one
-        let cartOrder = document.createElement('div');
-        cartOrder.id = currentCartId;
-        cartOrder.innerHTML=`
-            <h4>${currentName}</h4>
-            <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>` 
-        selectedOrder.append(cartOrder);
+    }else if (currentElement){//if it's less than 0 and it still exists in the array, remove it.
+        setTimeout(() => currentElement.remove(), 0);
+        console.log('product removed');
     }
+
 }
 
 //Helper function to get the current ID of a function
@@ -147,7 +155,14 @@ function getCurrentId(i){
 function getCurrentQuantity(i){
     let currentId = getCurrentId(i);
     let currentQuantity = cartArray.find(prod => prod.id === currentId);
-    return currentQuantity.quantity;
+
+    if (!currentQuantity){
+        return 0;
+    }else{
+        return currentQuantity.quantity;
+    }
+    
+    
 }
 
 //Function add quantity
@@ -155,17 +170,25 @@ function addQuantity(i){
     let currentId = getCurrentId(i);//get the current product ID
     let arrayId = cartArray.findIndex(product => product.id === currentId);//Get index of the array with currentId, and return -1 if there isn't one
         cartArray[arrayId].quantity += 1;
+    updateButton(i);
+    renderToCart(i);
 }
 
 //Function to subtract quantity
 function subtractQuantity(i){
     let currentId = getCurrentId(i);
     let arrayId = cartArray.findIndex(product => product.id === currentId);
-    if (arrayId !== -1){
-        if(cartArray[arrayId].quantity !== 0){
-            cartArray[arrayId].quantity -= 1;
-        }else{
+    if (arrayId !== -1){//if the product exists in array
+        if (cartArray[arrayId].quantity > 0) {//if it's more than 0
+            cartArray[arrayId].quantity -= 1;//deduct quantity by 1
+            console.log(cartArray);
+            if(cartArray[arrayId].quantity === 0){
+                cartArray.splice(arrayId, 1);
+                console.log(cartArray);
+            }
+
             updateButton(i);
+            renderToCart(i);
         }
     }
 }

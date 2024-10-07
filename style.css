@@ -94,6 +94,17 @@ body{
     padding: 1.5em;
 }
 
+.cart-prod-detail{
+    display: flex;
+    align-items: center;
+}
+
+.remove-prod-btn{
+    border: 1px solid var(--rose900);
+    border-radius: 50%;
+    padding: 0.1em 0.5em;
+}
+
 #order-modal{
     display: none;
 }

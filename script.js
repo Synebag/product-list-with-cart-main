@@ -129,14 +129,16 @@ function renderToCart(i){
 
     if(currentQuantity > 0){
         if (currentElement) {
-            currentElement.innerHTML=`<h4>${currentName}</h4><p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>`;
+            currentElement.innerHTML=`
+                <h4>${currentName}</h4>
+                <div class='cart-prod-detail'><p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p><a class='remove-prod-btn'>x</a></div>`;
         } else {
              //If it doesn't, it'll add a new one
             let cartOrder = document.createElement('div');
             cartOrder.id = currentCartId;
             cartOrder.innerHTML=`
                 <h4>${currentName}</h4>
-                <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>` 
+                <div class='cart-prod-detail'><p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p><a class='remove-prod-btn'>x</a></div>` 
             selectedOrder.append(cartOrder);
         }
     }else if (currentElement){//if it's less than 0 and it still exists in the array, remove it.

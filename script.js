@@ -124,21 +124,33 @@ function renderToCart(i){
     let currentName = productArray[i].name;
     let currentPrice = productArray[i].price;
     let currentQuantity = getCurrentQuantity(i);
+    let removeProductButton = document.createElement('a');
+    removeProductButton.innerHTML=`x`;
+    removeProductButton.classList.add('remove-prod-btn');
+    removeProductButton.addEventListener('click',() => removeProduct(i));
 
     let currentElement = selectedOrder.querySelector(`#${currentCartId}`);
+    const prodDetailClass = 'cart-prod-detail';
+    let elementContent = `
+                <h4>${currentName}</h4>
+                <div class='${prodDetailClass}'>
+                    <div>
+                        <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>
+                    <div>
+                </div>`;
 
     if(currentQuantity > 0){
         if (currentElement) {
-            currentElement.innerHTML=`
-                <h4>${currentName}</h4>
-                <div class='cart-prod-detail'><p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p><a class='remove-prod-btn'>x</a></div>`;
+            //Updates if it exists
+            currentElement.innerHTML = elementContent;
+            currentElement.querySelector(`.${prodDetailClass}`).append(removeProductButton);
+            
         } else {
              //If it doesn't, it'll add a new one
             let cartOrder = document.createElement('div');
             cartOrder.id = currentCartId;
-            cartOrder.innerHTML=`
-                <h4>${currentName}</h4>
-                <div class='cart-prod-detail'><p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p><a class='remove-prod-btn'>x</a></div>` 
+            cartOrder.innerHTML= elementContent;
+                cartOrder.querySelector(`.${prodDetailClass}`).append(removeProductButton);
             selectedOrder.append(cartOrder);
         }
     }else if (currentElement){//if it's less than 0 and it still exists in the array, remove it.
@@ -193,4 +205,12 @@ function subtractQuantity(i){
             renderToCart(i);
         }
     }
+}
+
+function removeProduct(i){
+    let currentId = getCurrentId(i);
+    let arrayId = cartArray.findIndex(product => product.id === currentId);
+    cartArray.splice(arrayId, 1);
+    updateButton(i);
+    renderToCart(i);
 }

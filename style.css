@@ -116,6 +116,15 @@ body{
     cursor: pointer;
 }
 
+#cart-total{
+    display: flex;
+    justify-content: space-between;
+}
+
+#total-amount{
+    display: none;
+}
+
 #order-modal{
     display: none;
 }

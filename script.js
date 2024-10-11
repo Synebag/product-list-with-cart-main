@@ -106,6 +106,7 @@ const cartDiv = document.getElementById('cart');
 const selectedOrder = document.getElementById('selected-order');
 const cartPlaceholder = document.getElementById('cart-placeholder');
 const cartQuantity = document.getElementById('cart-quantity');
+const cartTotal = document.getElementById('cart-total');
 
 //Function to add the products to the cart
 function renderToCart(i){
@@ -114,8 +115,10 @@ function renderToCart(i){
     
     if (cartArray.length > 0){
         cartPlaceholder.style.display= 'none';
+        cartTotal.style.display = 'block';
     }else{
         cartPlaceholder.style.display= 'block';
+        cartTotal.style.display = 'none';
     }
 
     //Get the product object from the product array

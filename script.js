@@ -132,10 +132,12 @@ function renderToCart(i){
     let currentElement = selectedOrder.querySelector(`#${currentCartId}`);
     const prodDetailClass = 'cart-prod-detail';
     let elementContent = `
-                <h4>${currentName}</h4>
                 <div class='${prodDetailClass}'>
                     <div>
-                        <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>
+                        <h4 class="cart-prod-title">${currentName}</h4>
+                        <div>
+                            <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>
+                        <div>
                     <div>
                 </div>`;
 

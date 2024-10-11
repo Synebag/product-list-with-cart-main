@@ -117,12 +117,12 @@ body{
 }
 
 #cart-total{
-    display: flex;
+    display: none;
     justify-content: space-between;
 }
 
 #total-amount{
-    display: none;
+
 }
 
 #order-modal{

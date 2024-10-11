@@ -44,7 +44,7 @@ function loadProducts(){
 
                     //Push the the product object and add an id to each product
                     if (!cartArray.find(prod => prod.id === currentProdId)){
-                        cartArray.push({id: currentProdId, quantity: 1});
+                        cartArray.push({id: currentProdId, quantity: 1, price: product.price});
                     };
 
                     updateButton(index);
@@ -107,17 +107,21 @@ const selectedOrder = document.getElementById('selected-order');
 const cartPlaceholder = document.getElementById('cart-placeholder');
 const cartQuantity = document.getElementById('cart-quantity');
 const cartTotal = document.getElementById('cart-total');
+const totalAmount = document.getElementById('total-amount');
 
 //Function to add the products to the cart
 function renderToCart(i){
     let totalQuantity = cartArray.reduce((total, product) => total + product.quantity, 0);
+    let priceTotal = cartArray.reduce((total,product) => total + (product.quantity * product.price), 0);
     cartQuantity.textContent = totalQuantity;
+    totalAmount.textContent = '$' + priceTotal;
+    console.log(priceTotal);
     
-    if (cartArray.length > 0){
-        cartPlaceholder.style.display= 'none';
-        cartTotal.style.display = 'block';
+    if(cartArray.length > 0){
+        cartPlaceholder.style.display = 'none';
+        cartTotal.style.display = 'flex';
     }else{
-        cartPlaceholder.style.display= 'block';
+        cartPlaceholder.style.display = 'block';
         cartTotal.style.display = 'none';
     }
 
@@ -180,8 +184,6 @@ function getCurrentQuantity(i){
     }else{
         return currentQuantity.quantity;
     }
-    
-    
 }
 
 //Function add quantity

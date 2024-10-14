@@ -108,6 +108,11 @@ const cartPlaceholder = document.getElementById('cart-placeholder');
 const cartQuantity = document.getElementById('cart-quantity');
 const cartTotal = document.getElementById('cart-total');
 const totalAmount = document.getElementById('total-amount');
+const confirmOrderSection= document.getElementById('confirm-order-section');
+const confirmOrderButton = document.getElementById('confirm-order-btn');
+const modalContainer = document.getElementById('modal-container');
+
+confirmOrderButton.addEventListener('click', modalPopup);
 
 //Function to add the products to the cart
 function renderToCart(i){
@@ -120,9 +125,12 @@ function renderToCart(i){
     if(cartArray.length > 0){
         cartPlaceholder.style.display = 'none';
         cartTotal.style.display = 'flex';
+        confirmOrderSection.style.display = 'flex'; 
+
     }else{
         cartPlaceholder.style.display = 'block';
         cartTotal.style.display = 'none';
+        confirmOrderSection.style.display = 'none';
     }
 
     //Get the product object from the product array
@@ -220,4 +228,8 @@ function removeProduct(i){
     cartArray.splice(arrayId, 1);
     updateButton(i);
     renderToCart(i);
+}
+
+function modalPopup(){
+    modalContainer.style.display = 'block';
 }

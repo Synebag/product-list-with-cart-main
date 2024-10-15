@@ -114,6 +114,10 @@ const modalContainer = document.getElementById('modal-container');
 
 confirmOrderButton.addEventListener('click', modalPopup);
 
+document.addEventListener('DOMContentLoaded', function() {
+    modalContainer.style.height = '100vh';
+});
+
 //Function to add the products to the cart
 function renderToCart(i){
     let totalQuantity = cartArray.reduce((total, product) => total + product.quantity, 0);

@@ -160,11 +160,23 @@ body{
     top: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 10000;
+    justify-content: center;
+    align-items: center;
 }
 
 #order-modal{
+    padding: 2em;
     background-color: var(--rose50);
     border-radius: 0.5em;
+}
+
+#start-new-btn{
+    border-radius: 1em;
+    color: var(--rose50);
+    background-color: var(--red);
+    padding: 0.5em 1em;
+    text-align: center;
+    cursor: pointer;
 }
 
 .attribution{

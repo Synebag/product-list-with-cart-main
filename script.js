@@ -111,6 +111,7 @@ const totalAmount = document.getElementById('total-amount');
 const confirmOrderSection= document.getElementById('confirm-order-section');
 const confirmOrderButton = document.getElementById('confirm-order-btn');
 const modalContainer = document.getElementById('modal-container');
+const confirmedOrder = document.getElementById('confirmed-order');
 
 confirmOrderButton.addEventListener('click', modalPopup);
 
@@ -235,5 +236,6 @@ function removeProduct(i){
 }
 
 function modalPopup(){
-    modalContainer.style.display = 'block';
+    modalContainer.style.display = 'flex';
+    modal
 }

@@ -111,7 +111,7 @@ const totalAmount = document.getElementById('total-amount');
 const confirmOrderSection= document.getElementById('confirm-order-section');
 const confirmOrderButton = document.getElementById('confirm-order-btn');
 const modalContainer = document.getElementById('modal-container');
-const confirmedOrder = document.getElementById('confirmed-order');
+const modalConfirmedOrder = document.getElementById('confirmed-order');
 
 confirmOrderButton.addEventListener('click', modalPopup);
 
@@ -237,5 +237,23 @@ function removeProduct(i){
 
 function modalPopup(){
     modalContainer.style.display = 'flex';
-    modal
+    modalConfirmedOrder.innerHTML = ''; //Empty out the modal to reset
+
+    cartArray.forEach((product) => {
+        const productIndex = productArray.findIndex(p => `product-${productArray.indexOf(p)}` === product.id);// For each product in productArray, get the first index that equals to product.id. 
+        let selected = productArray[productIndex];
+        console.log(selected);
+        let content = `
+                <div class=''>
+                    <div>
+                        <h4 class="cart-prod-title">${selected.name}</h4>
+                        <div>
+                            <p>${product.quantity} @ $${product.price} $${product.quantity*product.price}</p>
+                        <div>
+                    <div>
+                </div>`;
+        modalConfirmedOrder.innerHTML += content;
+    });
+
+    
 }

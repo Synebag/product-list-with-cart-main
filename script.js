@@ -112,8 +112,10 @@ const confirmOrderSection= document.getElementById('confirm-order-section');
 const confirmOrderButton = document.getElementById('confirm-order-btn');
 const modalContainer = document.getElementById('modal-container');
 const modalConfirmedOrder = document.getElementById('confirmed-order');
+const modalStartNewButton = document.getElementById('start-new-btn');
 
 confirmOrderButton.addEventListener('click', modalPopup);
+modalStartNewButton.addEventListener('click', modalClose);
 
 document.addEventListener('DOMContentLoaded', function() {
     modalContainer.style.height = '100vh';
@@ -125,7 +127,6 @@ function renderToCart(i){
     let priceTotal = cartArray.reduce((total,product) => total + (product.quantity * product.price), 0);
     cartQuantity.textContent = totalQuantity;
     totalAmount.textContent = '$' + priceTotal;
-    console.log(priceTotal);
     
     if(cartArray.length > 0){
         cartPlaceholder.style.display = 'none';
@@ -182,6 +183,8 @@ function renderToCart(i){
 
 }
 
+
+
 //Helper function to get the current ID of a function
 function getCurrentId(i){
     return 'product-' + i;
@@ -227,6 +230,7 @@ function subtractQuantity(i){
     }
 }
 
+//Function to remove product from cart
 function removeProduct(i){
     let currentId = getCurrentId(i);
     let arrayId = cartArray.findIndex(product => product.id === currentId);
@@ -235,6 +239,7 @@ function removeProduct(i){
     renderToCart(i);
 }
 
+//Function to pop up the modal
 function modalPopup(){
     modalContainer.style.display = 'flex';
     modalConfirmedOrder.innerHTML = ''; //Empty out the modal to reset
@@ -242,18 +247,32 @@ function modalPopup(){
     cartArray.forEach((product) => {
         const productIndex = productArray.findIndex(p => `product-${productArray.indexOf(p)}` === product.id);// For each product in productArray, get the first index that equals to product.id. 
         let selected = productArray[productIndex];
-        console.log(selected);
         let content = `
                 <div class=''>
-                    <div>
-                        <h4 class="cart-prod-title">${selected.name}</h4>
+                    <div class="cart-prod">
+                        <img class="modal-thumbnail" src="${selected.image.thumbnail}">
                         <div>
-                            <p>${product.quantity} @ $${product.price} $${product.quantity*product.price}</p>
-                        <div>
-                    <div>
-                </div>`;
+                            <h4 class="cart-prod-title">${selected.name}</h4>
+                            <p>${product.quantity} @ $${product.price}</p>
+                        </div>
+                        $${product.quantity*product.price}
+                    </div>
+                </div>
+                <br></br>`;
         modalConfirmedOrder.innerHTML += content;
     });
 
-    
+    console.log(cartArray);
+}
+
+//Function to close modal 
+function modalClose(){
+    modalContainer.style.display = 'none';
+    modalConfirmedOrder.innerHTML = '';
+    [...cartArray].forEach((product) => {
+        console.log(product.id);
+        let index = product.id.replace('product-','');
+        removeProduct(index);
+    });
+    console.log(cartArray);
 }

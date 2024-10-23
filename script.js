@@ -34,7 +34,7 @@ function loadProducts(){
                 productImage.src = product.image.desktop;
                 productCategory.textContent = product.category;
                 productTitle.textContent = product.name;
-                productPrice.textContent = product.price;
+                productPrice.textContent = formatPrice(product.price);
                 addCartButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="none" viewBox="0 0 21 20"><g fill="#C73B0F" clip-path="url(#a)"><path d="M6.583 18.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM15.334 18.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM3.446 1.752a.625.625 0 0 0-.613-.502h-2.5V2.5h1.988l2.4 11.998a.625.625 0 0 0 .612.502h11.25v-1.25H5.847l-.5-2.5h11.238a.625.625 0 0 0 .61-.49l1.417-6.385h-1.28L16.083 10H5.096l-1.65-8.248Z"/><path d="M11.584 3.75v-2.5h-1.25v2.5h-2.5V5h2.5v2.5h1.25V5h2.5V3.75h-2.5Z"/></g><defs><clipPath id="a"><path fill="#fff" d="M.333 0h20v20h-20z"/></clipPath></defs></svg><p>Add to Cart</p>';
 
                 // Add functions to the add to cart button
@@ -44,7 +44,7 @@ function loadProducts(){
 
                     //Push the the product object and add an id to each product
                     if (!cartArray.find(prod => prod.id === currentProdId)){
-                        cartArray.push({id: currentProdId, quantity: 1, price: product.price});
+                        cartArray.push({id: currentProdId, quantity: 1, price: formatPrice(product.price)});
                     };
 
                     updateButton(index);
@@ -61,7 +61,7 @@ function loadProducts(){
 }
 
 //Function to turn prices to 2 decimal points
-function fortmatPrice(price){
+function formatPrice(price){
     return parseFloat(price).toFixed(2);
 }
 
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //Function to add the products to the cart
 function renderToCart(i){
     let totalQuantity = cartArray.reduce((total, product) => total + product.quantity, 0);
-    let priceTotal = cartArray.reduce((total,product) => total + (product.quantity * product.price), 0);
+    let priceTotal = formatPrice(cartArray.reduce((total,product) => total + (product.quantity * product.price), 0));
     cartQuantity.textContent = totalQuantity;
     totalAmount.textContent = '$' + priceTotal;
     
@@ -149,7 +149,7 @@ function renderToCart(i){
     let currentId = 'product-' + i;
     let currentCartId = 'cart-' + currentId;
     let currentName = productArray[i].name;
-    let currentPrice = productArray[i].price;
+    let currentPrice = formatPrice(productArray[i].price);
     let currentQuantity = getCurrentQuantity(i);
     let removeProductButton = document.createElement('a');
     removeProductButton.innerHTML=`x`;
@@ -163,7 +163,7 @@ function renderToCart(i){
                     <div>
                         <h4 class="cart-prod-title">${currentName}</h4>
                         <div>
-                            <p>${currentQuantity}x @ $${currentPrice} $${currentQuantity*currentPrice}</p>
+                            <p>${currentQuantity}x @ $${currentPrice} $${formatPrice(currentQuantity*currentPrice)}</p>
                         <div>
                     <div>
                 </div>`;
@@ -249,6 +249,7 @@ function modalPopup(){
     modalConfirmedOrder.innerHTML = ''; //Empty out the modal to reset
 
     let priceTotal = cartArray.reduce((total,product) => total + (product.quantity * product.price), 0);
+    priceTotal = formatPrice(priceTotal);
     modalTotal.innerHTML = `<p>Order Total</p> <h2>$${priceTotal}</h2>`;
 
     cartArray.forEach((product) => {
@@ -260,9 +261,9 @@ function modalPopup(){
                         <img class="modal-thumbnail" src="${selected.image.thumbnail}">
                         <div class="cart-prod-desc">
                             <h5 class="cart-prod-title">${selected.name}</h5>
-                            <p>${product.quantity}x  @$${product.price}</p>
+                            <p>${product.quantity}x  @$${formatPrice(product.price)}</p>
                         </div>
-                        <p class="cart-prod-total">$${product.quantity*product.price}</p>
+                        <p class="cart-prod-total">$${formatPrice(product.quantity*product.price)}</p>
                     </div>
                 </div>
                 <hr>`;

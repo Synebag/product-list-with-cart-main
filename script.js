@@ -113,6 +113,7 @@ const confirmOrderButton = document.getElementById('confirm-order-btn');
 const modalContainer = document.getElementById('modal-container');
 const modalConfirmedOrder = document.getElementById('confirmed-order');
 const modalStartNewButton = document.getElementById('start-new-btn');
+const modalTotal = document.getElementById('modal-total');
 
 confirmOrderButton.addEventListener('click', modalPopup);
 modalStartNewButton.addEventListener('click', modalClose);
@@ -157,7 +158,7 @@ function renderToCart(i){
                     <div>
                         <h4 class="cart-prod-title">${currentName}</h4>
                         <div>
-                            <p>${currentQuantity} @ $${currentPrice} $${currentQuantity*currentPrice}</p>
+                            <p>${currentQuantity}x @ $${currentPrice} $${currentQuantity*currentPrice}</p>
                         <div>
                     <div>
                 </div>`;
@@ -244,24 +245,29 @@ function modalPopup(){
     modalContainer.style.display = 'flex';
     modalConfirmedOrder.innerHTML = ''; //Empty out the modal to reset
 
+    let priceTotal = cartArray.reduce((total,product) => total + (product.quantity * product.price), 0);
+    modalTotal.innerHTML = `<p>Order Total</p> <h2>$${priceTotal}</h2>`;
+
     cartArray.forEach((product) => {
         const productIndex = productArray.findIndex(p => `product-${productArray.indexOf(p)}` === product.id);// For each product in productArray, get the first index that equals to product.id. 
         let selected = productArray[productIndex];
         let content = `
-                <div class=''>
+                <div class='modal-prod'>
                     <div class="cart-prod">
                         <img class="modal-thumbnail" src="${selected.image.thumbnail}">
-                        <div>
-                            <h4 class="cart-prod-title">${selected.name}</h4>
-                            <p>${product.quantity} @ $${product.price}</p>
+                        <div class="cart-prod-desc">
+                            <h5 class="cart-prod-title">${selected.name}</h5>
+                            <p>${product.quantity}x  @$${product.price}</p>
                         </div>
-                        $${product.quantity*product.price}
+                        <p class="cart-prod-total">$${product.quantity*product.price}</p>
                     </div>
                 </div>
-                <br></br>`;
+                <hr>`;
         modalConfirmedOrder.innerHTML += content;
     });
 
+
+    
     console.log(cartArray);
 }
 

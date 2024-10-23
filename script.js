@@ -60,6 +60,11 @@ function loadProducts(){
         })
 }
 
+//Function to turn prices to 2 decimal points
+function fortmatPrice(price){
+    return parseFloat(price).toFixed(2);
+}
+
 function updateButton(i){
 
     const addCartButton = document.getElementById(getCurrentId(i));
@@ -183,8 +188,6 @@ function renderToCart(i){
     }
 
 }
-
-
 
 //Helper function to get the current ID of a function
 function getCurrentId(i){

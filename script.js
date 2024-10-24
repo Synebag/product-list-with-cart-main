@@ -93,7 +93,7 @@ function updateButton(i){
         addCartButton.append(addQuantityButton, productQuantity ,subtractQuantityButton);
         addCartButton.style.backgroundColor = 'var(--red)';
         addCartButton.style.color = 'var(--rose50)';
-        currentProductImage.style.border = "2px solid var(--red)"
+        currentProductImage.style.border = "3px solid var(--red)"
 
         addQuantityButton.addEventListener('click',(event) => {
             event.stopPropagation();

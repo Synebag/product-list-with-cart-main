@@ -116,6 +116,19 @@ hr{
     padding: 1.5em;
 }
 
+#cart-placeholder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+#cart-placeholder img{
+    width: fit-content;
+}
+
 .cart-prod-title{
     margin: 0;
 }

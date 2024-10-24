@@ -140,7 +140,7 @@ function renderToCart(i){
         confirmOrderSection.style.display = 'flex'; 
 
     }else{
-        cartPlaceholder.style.display = 'block';
+        cartPlaceholder.style.display = 'flex';
         cartTotal.style.display = 'none';
         confirmOrderSection.style.display = 'none';
     }

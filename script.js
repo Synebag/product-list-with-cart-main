@@ -29,6 +29,7 @@ function loadProducts(){
                 // Add an ID to every product so it can be refered and added to the cart
                 productID = getCurrentId(index);
                 addCartButton.id = productID;
+                productImage.id = 'prod-img-' + index;
 
                 //Add content to created elements
                 productImage.src = product.image.desktop;

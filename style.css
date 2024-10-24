@@ -37,15 +37,19 @@ hr{
 
 #main-container{
     display: grid;
-    grid-template-columns: auto max-content;
+    grid-template-columns: auto auto;
     max-width: 1140px;
     margin-left: auto;
     margin-right: auto;
+    padding: 2em;
     gap: 1.5em;
+    grid-template-columns: 2fr 1fr;
 }
 
 #product-list-container{
-    
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
 #product-list{

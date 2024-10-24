@@ -37,7 +37,7 @@ hr{
 
 #main-container{
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: auto max-content;
     max-width: 1140px;
     margin-left: auto;
     margin-right: auto;
@@ -230,4 +230,30 @@ hr{
 
 .attribution{
     padding-top: 2.5em;
+}
+
+/* Media queries */
+
+/* Tablet view */
+
+@media only screen and (max-width: 768px){
+    #main-container{
+        grid-template-columns: 1fr;
+    }
+
+    #product-list{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+
+/* Mobile view */
+@media only screen and (max-width: 480px){
+    #main-container{
+        grid-template-columns: 1fr;
+    }
+
+    #product-list{
+        grid-template-columns: 1fr;
+    }
 }

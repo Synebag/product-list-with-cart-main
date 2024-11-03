@@ -59,8 +59,9 @@ hr{
     gap: 1.5em;
 }
 
-.product{
-    
+.product-img-container{
+    padding-bottom: 1.5em;
+    position: relative;
 }
 
 .product-img{
@@ -70,18 +71,23 @@ hr{
 }
 
 .add-cart-btn{
-    position: absolute;
-    transform: translateX(30px);
+    position: absolute; 
+    left: 50%;
+    transform-origin: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
     background-color: var(--rose50);
     display: flex;
+    min-width: 181.48px;
     gap: 0.5em;
     align-items: center;
     border: 1px solid var(--red);
-    border-radius: 1.5em;
+    border-radius: 5em;
     text-align: center;
+    white-space: nowrap;
     font-weight: 500;
     width: fit-content;
-    padding: 0.5em 1em;
+    padding: 0.75em;
     cursor: pointer;
     transition: var(--button-transition);
 }

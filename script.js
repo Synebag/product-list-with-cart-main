@@ -93,7 +93,7 @@ function updateButton(i){
         productQuantity.textContent = getCurrentQuantity(i);
 
         addCartButton.innerHTML = '';
-        addCartButton.append(addQuantityButton, productQuantity ,subtractQuantityButton);
+        addCartButton.append(subtractQuantityButton, productQuantity ,addQuantityButton);
         addCartButton.style.backgroundColor = 'var(--red)';
         addCartButton.style.color = 'var(--rose50)';
         addCartButton.style.padding = '0.75em';

@@ -98,7 +98,8 @@ function updateButton(i){
         addCartButton.style.color = 'var(--rose50)';
         addCartButton.style.padding = '0.75em';
         addCartButton.style.justifyContent = 'space-between'; 
-        currentProductImage.style.border = "3px solid var(--red)"
+        addCartButton.style.border =  '1px solid var(--red)';
+        currentProductImage.style.border = "2px solid var(--red)"
 
         addQuantityButton.addEventListener('click',(event) => {
             event.stopPropagation();
@@ -113,7 +114,8 @@ function updateButton(i){
         addCartButton.style.backgroundColor = 'var(--rose50)';
         addCartButton.style.color = 'var(--black)'
         addCartButton.style.padding = '0.75em 2em';
-        addCartButton.style.justifyContent = 'center'; 
+        addCartButton.style.justifyContent = 'center';
+        addCartButton.style.border =  '1px solid var(--rose900)';
         currentProductImage.style.border = "none";
     }
 }

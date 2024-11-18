@@ -26,7 +26,7 @@ function loadProducts(){
                 productDiv.classList.add('product');
                 productImage.classList.add('product-img');
                 addCartButton.classList.add('add-cart-btn');
-                productImageDiv.classList.add('product-img-container')
+                productImageDiv.classList.add('product-img-container');
 
                 // Add an ID to every product so it can be refered and added to the cart
                 productID = getCurrentId(index);
@@ -88,8 +88,8 @@ function updateButton(i){
         productQuantity.id = 'product-' + i + '-quantity';
 
         //change the text context accordingly
-        addQuantityButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"/></svg>';
-        subtractQuantityButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2"><path fill="#fff" d="M0 .375h10v1.25H0V.375Z"/></svg>';
+        addQuantityButton.innerHTML = '<svg class="quantity-btn-svg" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"/></svg>';
+        subtractQuantityButton.innerHTML = '<svg class="quantity-btn-svg" xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2"><path fill="#fff" d="M0 .375h10v1.25H0V.375Z"/></svg>';
         productQuantity.textContent = getCurrentQuantity(i);
 
         addCartButton.innerHTML = '';
@@ -97,9 +97,9 @@ function updateButton(i){
         addCartButton.style.backgroundColor = 'var(--red)';
         addCartButton.style.color = 'var(--rose50)';
         addCartButton.style.padding = '0.75em';
-        addCartButton.style.justifyContent = 'space-between'; 
+        addCartButton.style.justifyContent = 'space-between';
         addCartButton.style.border =  '1px solid var(--red)';
-        currentProductImage.style.border = "2px solid var(--red)"
+        currentProductImage.style.border = "2px solid var(--red)";
 
         addQuantityButton.addEventListener('click',(event) => {
             event.stopPropagation();
